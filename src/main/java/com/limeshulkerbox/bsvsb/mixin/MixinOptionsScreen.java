@@ -27,6 +27,6 @@ public abstract class MixinOptionsScreen extends Screen {
     @Inject(method = "method_19828", at = @At("HEAD"), cancellable = true)
     private void disableSodiumSettings(CallbackInfoReturnable<Screen> cir) {
         assert this.client != null;
-        cir.setReturnValue(new VideoOptionsScreen(this, this.settings));
+        cir.setReturnValue(new VideoOptionsScreen(this, this.client, this.settings));
     }
 }
