@@ -81,16 +81,10 @@ public abstract class MixinVideoOptionsScreen extends GameOptionsScreen {
         if (SodiumOptionsGUIClass == null) {
             try {
                 SodiumOptionsGUIClass = Class.forName("me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI");
-                //Use declaredConstructors to get the correct constructor, will break when adding more constructors
-                //Also consider using the public static method (public static Screen createScreen(Screen currentScreen)) (https://github.com/CaffeineMC/sodium-fabric/blob/db7c77a0960c166e4177acbbabd892167fcd0271/src/main/java/net/caffeinemc/mods/sodium/client/gui/SodiumOptionsGUI.java#L124C5-L124C62)
-                //This will most likely also need a rework in the future, because the sodium gui is getting reworked (https://github.com/CaffeineMC/sodium-fabric/issues/2562#issuecomment-2180808114)
-                SodiumOptionsGUIClassCtor = SodiumOptionsGUIClass.getDeclaredConstructors()[0];
-                //New constructor is private, so make it accessible
-                SodiumOptionsGUIClassCtor.setAccessible(true);
+                SodiumOptionsGUIClassCtor = SodiumOptionsGUIClass.getConstructor(Screen.class);
                 SodiumOptionsGUIClassPagesField = SodiumOptionsGUIClass.getDeclaredField("pages");
                 SodiumOptionsGUIClassPagesField.setAccessible(true);
             } catch (Exception e) {
-                System.out.println("crash ensure");
                 e.printStackTrace();
             }
         }
@@ -103,7 +97,6 @@ public abstract class MixinVideoOptionsScreen extends GameOptionsScreen {
             assert this.client != null;
             this.client.setScreen((Screen) SodiumOptionsGUIClassCtor.newInstance(this));
         } catch (Exception e) {
-            System.out.println("crash on sodiumVideoOptions");
             e.printStackTrace();
         }
     }
