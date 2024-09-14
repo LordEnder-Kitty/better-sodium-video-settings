@@ -1,7 +1,6 @@
 package dev.pieman.mixins;
 
 import dev.architectury.platform.Platform;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
@@ -41,7 +40,7 @@ public abstract class MixinVideoOptionsScreen extends GameOptionsScreen {
     protected void initFooter() {
         DirectionalLayoutWidget directionalLayoutWidget = this.layout.addFooter(DirectionalLayoutWidget.horizontal().spacing(8));
         directionalLayoutWidget.add(new ButtonWidget.Builder(Text.translatable("text.bsvsb.sodiumvideosettings"), (button) -> {
-            if (FabricLoader.getInstance().isModLoaded("reeses-sodium-options")) {
+            if (Platform.isModLoaded("reeses-sodium-options")) {
                 flashyReesesOptionsScreen();
             } else {
                 sodiumVideoOptionsScreen();
